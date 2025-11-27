@@ -1,10 +1,10 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import { PokemonPage } from './pokimon/PokimonApp.tsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import { TasksApp } from "./reducer/TaskApp.tsx";
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <PokemonPage />
-  </StrictMode>,
-)
+    <TasksApp />
+  </StrictMode>
+);
