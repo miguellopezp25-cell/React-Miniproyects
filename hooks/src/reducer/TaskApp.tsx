@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
 
 import { Plus, Trash2, Check } from "lucide-react";
 
@@ -6,46 +6,41 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-interface Todo {
-  id: number;
-  text: string;
-  completed: boolean;
-}
+import { taskReducer, getInitialValues } from "./useReducers/taskReducer";
 
 export const TasksApp = () => {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [state, dispatch] = useReducer(taskReducer, getInitialValues());
   const [inputValue, setInputValue] = useState("");
+
+  const todos = state.todos;
 
   const addTodo = () => {
     if (inputValue.length === 0) return;
     //create new object todo
-    const newTodo: Todo = {
-      id: Date.now(),
-      text: inputValue,
-      completed: false,
-    };
-    setTodos([...todos, newTodo]);
+    dispatch({
+      type: "add",
+      payload: inputValue,
+    });
     setInputValue("");
   };
 
   const toggleTodo = (id: number) => {
-    setTodos(
-      todos.map((todos) =>
-        todos.id === id ? { ...todos, completed: !todos.completed } : todos
-      )
-    );
+    dispatch({
+      type: "toggle",
+      payload: id,
+    });
   };
 
   const deleteTodo = (id: number) => {
-    console.log("Eliminar tarea", id);
-    const updatedTodos = todos.filter((todos) => todos.id !== id);
-    setTodos(updatedTodos);
+    dispatch({
+      type: "delete",
+      payload: id,
+    });
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
-      addTodo;
+      addTodo();
     }
   };
 

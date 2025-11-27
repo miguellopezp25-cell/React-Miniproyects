@@ -16,6 +16,14 @@ type TaskAction =
   | { type: "toggle"; payload: number }
   | { type: "delete"; payload: number };
 
+export const getInitialValues = (): TaskState => {
+  return {
+    todos: [],
+    length: 0,
+    completed: 0,
+    pending: 0,
+  };
+};
 export const taskReducer = (
   state: TaskState,
   action: TaskAction
