@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 
 import { Plus, Trash2, Check } from "lucide-react";
 
@@ -11,6 +11,10 @@ import { taskReducer, getInitialValues } from "./useReducers/taskReducer";
 export const TasksApp = () => {
   const [state, dispatch] = useReducer(taskReducer, getInitialValues());
   const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("task-state", JSON.stringify(state));
+  }, [state]);
 
   const todos = state.todos;
 
